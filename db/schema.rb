@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_11_163446) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_13_105429) do
+  create_table "messages", force: :cascade do |t|
+    t.text "content", null: false
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.string "title", null: false
     t.boolean "is_public", default: true, null: false
@@ -29,4 +39,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_163446) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
 end

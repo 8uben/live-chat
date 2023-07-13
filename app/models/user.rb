@@ -5,5 +5,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :validatable
 
+  has_many :messages
+
   validates :username, uniqueness: true
 end
