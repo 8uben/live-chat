@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_11_122813) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_11_163446) do
+  create_table "rooms", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "is_public", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_rooms_on_title", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "email", default: "", null: false
