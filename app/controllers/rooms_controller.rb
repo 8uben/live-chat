@@ -5,7 +5,13 @@ class RoomsController < ApplicationController
   end
 
   def create
-    Room.create(room_params)
+    @room = Room.new(room_params)
+
+    if @room.save
+      render @room
+    else
+      head :bad_request
+    end
   end
 
   private

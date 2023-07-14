@@ -1,4 +1,4 @@
-<%= form_with model: Room.new, url: rooms_path do |f| %>
-  <%= f.text_field :title, class: 'max-w-full' %>
+<%= form_with model: Room.new, url: rooms_path, data: { action: 'room-list#submit' } do |f| %>
+  <%= f.text_field :title, class: 'max-w-full', data: { 'room-list-target': 'input' } %>
   <%= f.submit 'Create room', class: 'bg-gray-100 px-3 py-2 border border-current pointer hover:bg-gray-200 cursor-pointer' %>
 <% end %>

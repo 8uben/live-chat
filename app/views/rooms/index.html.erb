@@ -7,12 +7,12 @@
   <% end %>
 </ul>
 
-<h2 class="text-4xl font-extrabold">Rooms<h2>
+<div data-controller="room-list">
+  <h2 class="text-4xl font-extrabold">Rooms<h2>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<ul>
-  <% @rooms.each do |room| %>
-    <li><%= room.title %></li>
-  <% end %>
-</ul>
+  <ul data-room-list-target="list">
+    <%= render @rooms %>
+  </ul>
+</div>
