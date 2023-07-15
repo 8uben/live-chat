@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   def index
     @users = User.without(current_user)
-    @rooms = Room.all
+    @rooms = Room.groups
   end
 
   def create

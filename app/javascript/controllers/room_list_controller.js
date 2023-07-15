@@ -9,14 +9,17 @@ export default class extends Controller {
     const form = event.target;
     const url = form.action;
 
-    const submitResponse = fetch(url, {
-      method: 'POST',
-      body: new FormData(form)
-    }).then((response) => response.text())
-      .catch((error) => console.log(`${error}`))
-
-    this.append(submitResponse)
+    this.load(url, form)
     this.resetInput()
+  }
+
+  load(url, data) {
+    fetch(url, {
+      method: 'POST',
+      body: new FormData(data)
+    }).then((response) => response.text())
+      .then((data) => this.append(data))
+      .catch((error) => console.log(`${error}`))
   }
 
   append(data) {
