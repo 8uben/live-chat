@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['userLink']
 
-  connect() {
-    console.log(this.userLinkTargets)
-  }
-
   show(event) {
     event.preventDefault()
 
@@ -16,7 +12,8 @@ export default class extends Controller {
   load() {
     fetch(this.userLinkTarget.href)
       .then((response) => response.text())
-      .then((data) => this.append(data))
+      .then((text) => this.parseModalwindow(text))
+      .then((element) => this.append(element))
       .catch((error) => console.log(`${error}`))
   }
 
@@ -24,14 +21,15 @@ export default class extends Controller {
     let roomWindow = document.querySelector('#modal')
 
     if (!roomWindow) {
-      roomWindow = document.createElement('div')
-      roomWindow.id = 'modal'
-      roomWindow.classList.add('room')
-      document.querySelector('main').appendChild(roomWindow)
+      document.querySelector('main').appendChild(data)
+    } else {
+      roomWindow.replaceChildren(data)
     }
-
-    roomWindow.innerHTML = data
   }
 
-
+  parseModalwindow(text) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(text, 'text/html')
+    return doc.getElementById('modal')
+  }
 }

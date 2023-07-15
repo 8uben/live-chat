@@ -2,6 +2,7 @@ class RoomsController < ApplicationController
   def index
     @users = User.without(current_user)
     @rooms = Room.groups
+    @room = Room.new
   end
 
   def create

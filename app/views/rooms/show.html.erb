@@ -1,7 +1,10 @@
-<h2 class="text-center text-white font-extrabold"><%= @user.username || @room.title %></h2>
+<div id="modal" class="room">
+  <h2 class="text-center text-white font-extrabold"><%= @user.username || @room.title %></h2>
+  <div data-controller="messages">
+    <div data-messages-target="messages" class="overflow-auto max-h-[40vh]">
+      <%= render @room.messages %>
+    </div>
 
-<%= form_with model: Message.new, url: messages_path, class: 'absolute bottom-2.5 text-center w-full' do |f| %>
-  <%= f.text_field :content, class: 'max-w-full w-[500px]', placeholder: 'Hi!' %>
-  <%= f.submit 'Create Message',
-    class: 'px-3 py-2 pointer bg-blue-600 hover:bg-blue-300 cursor-pointer text-white' %>
-<% end %>
+    <%= render 'messages/form' %>
+  </div>
+</div>
