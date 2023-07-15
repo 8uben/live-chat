@@ -1,0 +1,13 @@
+<div class="text-white" data-messages-target="message">
+  <% if message.room.is_public? %>
+    <h3><%= @user.username %></h3>
+  <% end %>
+
+  <% if message.user == current_user %>
+    <% content_class_names = 'text-right' %>
+  <% else %>
+    <% content_class_names = 'text-left'%>
+  <% end %>
+
+  <p class=<%= content_class_names %>><%= message.content %></p>
+</div>
