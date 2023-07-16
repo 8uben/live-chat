@@ -1,6 +1,8 @@
-<div id="modal" class="room">
+<div id="modal" class="room" data-controller="messages"
+                             data-messages-room-id-value=<%= @room.id %>
+                             data-messages-current-user-id-value=<%= current_user.id %>>
   <h2 class="text-center text-white font-extrabold"><%= @user.username || @room.title %></h2>
-  <div data-controller="messages">
+  <div>
     <div data-messages-target="messages" class="overflow-auto max-h-[40vh]">
       <%= render @room.messages %>
     </div>

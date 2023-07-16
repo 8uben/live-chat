@@ -1,13 +1,17 @@
-<div class="text-white" data-messages-target="message">
-  <% if message.room.is_public? %>
-    <h3><%= @user.username %></h3>
-  <% end %>
+<% if message.user == current_user %>
+  <% flex_justify = 'justify-end' %>
+  <% bg_color = 'bg-blue-600' %>
+<% else %>
+  <% flex_justify = 'justify-start' %>
+  <% bg_color = 'bg-gray-700' %>
+<% end %>
 
-  <% if message.user == current_user %>
-    <% content_class_names = 'text-right' %>
-  <% else %>
-    <% content_class_names = 'text-left'%>
-  <% end %>
+<div class="flex break-all text-white m-2.5 <%= flex_justify %>" data-messages-target="message">
+  <div class="max-w-[50%] w-fit p-2.5 rounded-lg <%= bg_color %>">
+    <% if message.room.is_public? %>
+      <h3 class="font-semibold"><%= @user.username %></h3>
+    <% end %>
 
-  <p class=<%= content_class_names %>><%= message.content %></p>
+    <p><%= message.content %></p>
+  </div>
 </div>

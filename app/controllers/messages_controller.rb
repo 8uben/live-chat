@@ -3,8 +3,10 @@ class MessagesController < ApplicationController
     return head :forbidden unless can_send_message_to_room?
 
     @message = Message.new(message_params)
+    @room = Room.find(params[:room_id])
 
     if @message.save
+      RoomChannel.broadcast_to(@room, { template: render_to_string(@message), message: @message })
       render @message
     else
       head :bad_request

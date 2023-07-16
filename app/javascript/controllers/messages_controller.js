@@ -1,10 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
+import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = [ 'input', 'messages' ]
+  static values = { 'roomId': Number, 'currentUserId': Number }
 
   connect() {
     this.scrollDown()
+    this.subscribeToRoomChannel()
   }
 
   submit(event) {
@@ -22,13 +25,23 @@ export default class extends Controller {
       method: 'POST',
       body: new FormData(data)
     }).then((response) => response.text())
-      .then((data) => this.append(data))
       .then(() => this.scrollDown())
       .catch((error) => console.log(`${error}`))
   }
 
   append(data) {
-    this.messagesTarget.innerHTML += data
+    const template = data.template
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(template, 'text/html')
+
+    let contentElement = doc.querySelector('[data-messages-target]')
+
+    if (this.currentUserIdValue !== data.message.user_id) {
+      contentElement.classList.add('!justify-start')
+      contentElement.firstElementChild.classList.add('!bg-gray-700')
+    }
+
+    this.messagesTarget.appendChild(contentElement)
   }
 
   resetInput() {
@@ -37,5 +50,15 @@ export default class extends Controller {
 
   scrollDown() {
     this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight;
+  }
+
+  subscribeToRoomChannel() {
+    consumer.subscriptions.create({channel: 'RoomChannel', room_id: this.roomIdValue}, {
+      received: this._received.bind(this)
+    })
+  }
+
+  _received(data) {
+    this.append(data)
   }
 }
