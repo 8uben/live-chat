@@ -3,7 +3,7 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = [ 'input', 'messages' ]
-  static values = { 'roomId': Number, 'currentUserId': Number }
+  static values = { 'id': Number, 'currentUserId': Number }
 
   connect() {
     this.scrollDown()
@@ -16,11 +16,11 @@ export default class extends Controller {
     const form = event.target;
     const url = form.action;
 
-    this.load(url, form)
+    this.dataSubmit(url, form)
     this.resetInput()
   }
 
-  load(url, data) {
+  dataSubmit(url, data) {
     fetch(url, {
       method: 'POST',
       body: new FormData(data)
@@ -29,12 +29,12 @@ export default class extends Controller {
       .catch((error) => console.log(`${error}`))
   }
 
-  append(data) {
+  appendMessage(data) {
     const template = data.template
     const parser = new DOMParser()
     const doc = parser.parseFromString(template, 'text/html')
 
-    let contentElement = doc.querySelector('[data-messages-target]')
+    let contentElement = doc.querySelector('[data-room-target]')
 
     if (this.currentUserIdValue !== data.message.user_id) {
       contentElement.classList.add('!justify-start')
@@ -53,12 +53,12 @@ export default class extends Controller {
   }
 
   subscribeToRoomChannel() {
-    consumer.subscriptions.create({channel: 'RoomChannel', room_id: this.roomIdValue}, {
+    consumer.subscriptions.create({channel: 'RoomChannel', room_id: this.idValue}, {
       received: this._received.bind(this)
     })
   }
 
   _received(data) {
-    this.append(data)
+    this.appendMessage(data)
   }
 }

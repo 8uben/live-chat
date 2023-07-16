@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'input', 'list' ]
+  static targets = [ 'input', 'list', 'item' ]
 
   submit(event) {
     event.preventDefault();
@@ -9,24 +9,54 @@ export default class extends Controller {
     const form = event.target;
     const url = form.action;
 
-    this.load(url, form)
+    this.dataSubmit(url, form)
     this.resetInput()
   }
 
-  load(url, data) {
+  dataSubmit(url, data) {
     fetch(url, {
       method: 'POST',
       body: new FormData(data)
     }).then((response) => response.text())
-      .then((data) => this.append(data))
+      .then((data) => this.appendItem(data))
       .catch((error) => console.log(`${error}`))
   }
 
-  append(data) {
+  appendItem(data) {
     this.listTarget.innerHTML += data
   }
 
   resetInput() {
     this.inputTarget.value = ''
+  }
+
+  click(event) {
+    event.preventDefault()
+
+    this.openItem(event)
+  }
+
+  openItem(event) {
+    fetch(event.srcElement.href)
+      .then((response) => response.text())
+      .then((text) => this.parseModal(text))
+      .then((element) => this.appendModal(element))
+      .catch((error) => console.log(`${error}`))
+  }
+
+  appendModal(data) {
+    let roomWindow = document.querySelector('#modal')
+
+    if (!roomWindow) {
+      document.querySelector('main').appendChild(data)
+    } else {
+      roomWindow.replaceChildren(data)
+    }
+  }
+
+  parseModal(text) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(text, 'text/html')
+    return doc.getElementById('modal')
   }
 }

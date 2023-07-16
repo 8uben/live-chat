@@ -1,4 +1,4 @@
-<% if message.user == current_user %>
+<% if message.user_id == current_user.id %>
   <% flex_justify = 'justify-end' %>
   <% bg_color = 'bg-blue-600' %>
 <% else %>
@@ -6,10 +6,10 @@
   <% bg_color = 'bg-gray-700' %>
 <% end %>
 
-<div class="flex break-all text-white m-2.5 <%= flex_justify %>" data-messages-target="message">
+<div class="flex break-all text-white m-2.5 <%= flex_justify %>" data-room-target="message">
   <div class="max-w-[50%] w-fit p-2.5 rounded-lg <%= bg_color %>">
     <% if message.room.is_public? %>
-      <h3 class="font-semibold"><%= @user.username %></h3>
+      <h3 class="font-semibold"><%= message.user.username %></h3>
     <% end %>
 
     <p><%= message.content %></p>

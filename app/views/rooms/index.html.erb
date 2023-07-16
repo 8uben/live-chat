@@ -1,16 +1,18 @@
 <h1 class="text-5xl font-extrabold">Hi, <%= current_user.username %><h1>
-<div data-controller="users">
-  <h2 class="text-4xl font-extrabold">Users<h2>
-  <ul>
-    <%= render @users %>
-  </ul>
-</div>
 <div data-controller="room-list">
-  <h2 class="text-4xl font-extrabold">Rooms<h2>
+  <div>
+    <h2 class="text-4xl font-extrabold">Users<h2>
+    <ul data-room-list-target="list">
+      <%= render @users %>
+    </ul>
+  </div>
+  <div>
+    <h2 class="text-4xl font-extrabold">Rooms<h2>
 
-  <%= render 'form' %>
+    <%= render 'form' %>
 
-  <ul data-room-list-target="list">
-    <%= render @rooms %>
-  </ul>
+    <ul data-room-list-target="list">
+      <%= render @rooms %>
+    </ul>
+  </div>
 </div>

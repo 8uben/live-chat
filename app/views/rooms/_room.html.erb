@@ -1,1 +1,2 @@
-<li><%= room.title %></li>
+<li><%= link_to room.title, room, data: { 'room-list-target': 'item', action: 'room-list#click' },
+                                  class: 'text-blue-600' %></li>

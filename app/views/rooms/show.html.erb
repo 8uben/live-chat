@@ -1,12 +1,12 @@
-<div id="modal" class="room" data-controller="messages"
-                             data-messages-room-id-value=<%= @room.id %>
-                             data-messages-current-user-id-value=<%= current_user.id %>>
-  <h2 class="text-center text-white font-extrabold"><%= @user.username || @room.title %></h2>
+<div id="modal" class="room" data-controller="room"
+                             data-room-id-value=<%= @room.id %>
+                             data-room-current-user-id-value=<%= current_user.id %>>
+  <h2 class="text-center text-white font-extrabold"><%= @user&.username || @room.title %></h2>
   <div>
-    <div data-messages-target="messages" class="overflow-auto max-h-[40vh]">
+    <div data-room-target="messages" class="overflow-auto max-h-[30vh] sm:max-h-[40vh]">
       <%= render @room.messages %>
     </div>
 
-    <%= render 'messages/form' %>
+    <%= render 'messages/form', room: @room, message: @message %>
   </div>
 </div>
