@@ -1,0 +1,14 @@
+user1:
+  id: 1
+  username: 'First'
+  email: 'first@email.users'
+
+user2:
+  id: 2
+  username: 'Second'
+  email: 'second@email.users'
+
+user3:
+  id: 3
+  username: 'Third'
+  email: 'third@email.users'
