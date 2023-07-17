@@ -2,7 +2,7 @@ require "test_helper"
 
 class RoomChannelTest < ActionCable::Channel::TestCase
   setup do
-    @room = rooms(:public_room)
+    @room = rooms(:public)
   end
 
   test 'subscribes and stream for room' do

@@ -1,9 +1,14 @@
-private_room:
+private:
   id: 1
   title: 'dialog1-2'
   is_public: false
 
-public_room:
+public:
   id: 2
   title: 'Room title'
   is_public: true
+
+another_private:
+  id: 3
+  title: 'dialog2-3'
+  is_public: false

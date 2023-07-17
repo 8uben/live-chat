@@ -1,11 +1,14 @@
 class MessagesController < ApplicationController
   def create
+    @room = Room.find_by(id: params[:room_id])
+
+    return head :bad_request unless @room.present?
     return head :forbidden unless can_send_message_to_room?
 
     @message = Message.new(message_params)
-    @room = Room.find(params[:room_id])
 
     if @message.save
+      # NOTE: maybe to call broadcast from job?
       RoomChannel.broadcast_to(@room, { template: render_to_string(@message), message: @message })
       render @message
     else
@@ -21,11 +24,8 @@ class MessagesController < ApplicationController
   end
 
   def can_send_message_to_room?
-    room = Room.find(params[:room_id])
+    return true if @room.is_public?
 
-    return true if room.is_public?
-
-    room.title.split('dialog').last.split('-').map(&:to_i).include?(current_user.id)
+    @room.title.split('dialog').last.split('-').map(&:to_i).include?(current_user.id)
   end
-
 end
