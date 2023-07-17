@@ -12,3 +12,8 @@ user3:
   id: 3
   username: 'Third'
   email: 'third@email.users'
+
+companion:
+  id: 4
+  username: 'companion123'
+  email: 'companion@email.users'

@@ -66,3 +66,10 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+group :test do
+  # See https://github.com/teamcapybara/capybara
+  gem 'capybara'
+  # See https://github.com/SeleniumHQ/selenium
+  gem 'selenium-webdriver', '~> 4.4'
+end
