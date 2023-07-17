@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+user = User.create!(username: 'iBot', email: 'iBot@example.ex', password: 'changeme')
+User.create!(username: 'rand951', email: 'rand951@example.ex', password: 'changeme')
+
+room = Room.create!(title: 'Stuff')
+
+Message.create!(content: 'Hello, world!', room_id: room.id, user_id: user.id)
