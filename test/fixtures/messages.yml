@@ -1,0 +1,5 @@
+hello:
+  id: 1
+  content: 'Hello, world!'
+  room_id: 2
+  user_id: 1
