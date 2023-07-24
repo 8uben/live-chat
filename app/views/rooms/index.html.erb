@@ -2,7 +2,7 @@
 <div data-controller="room-list">
   <div>
     <h2 class="text-4xl font-extrabold">Users<h2>
-    <ul data-room-list-target="list">
+    <ul data-room-list-target="privateList">
       <%= render @users %>
     </ul>
   </div>
@@ -11,7 +11,7 @@
 
     <%= render 'form' %>
 
-    <ul data-room-list-target="list">
+    <ul data-room-list-target="publicList">
       <%= render @rooms %>
     </ul>
   </div>
