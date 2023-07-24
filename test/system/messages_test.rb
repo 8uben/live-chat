@@ -28,6 +28,21 @@ class MessagesTest < ApplicationSystemTestCase
     # pending...
   end
 
+  test 'new room added to list of public rooms' do
+    room_title = rooms(:public).title
+
+    sign_in users(:user1)
+
+    visit root_path
+
+    fill_in 'room_title', with: room_title
+    click_button 'Create room'
+
+    within('ul[data-room-list-target="publicList"]') do
+      assert_text room_title
+    end
+  end
+
   private
 
   def send_message(message)

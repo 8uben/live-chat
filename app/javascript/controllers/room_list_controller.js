@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'input', 'list', 'item' ]
+  static targets = [ 'input', 'privateList', 'publicList', 'item' ]
 
   submit(event) {
     event.preventDefault();
@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   appendItem(data) {
-    this.listTarget.innerHTML += data
+    this.publicListTarget.innerHTML += data
   }
 
   resetInput() {
