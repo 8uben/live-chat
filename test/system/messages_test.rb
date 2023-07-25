@@ -28,6 +28,24 @@ class MessagesTest < ApplicationSystemTestCase
     # pending...
   end
 
+  test 'should to show new messages after returning to the room' do
+    user = users(:user1)
+    room = rooms(:public)
+
+    sign_in user
+
+    visit root_path
+
+    2.times do
+      click_link room.title
+    end
+
+    send_message(@message)
+
+    assert_empty find_field(@input_placeholder).value
+    assert_text @message
+  end
+
   test 'new room added to list of public rooms' do
     room_title = rooms(:public).title
 

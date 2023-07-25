@@ -50,7 +50,7 @@ export default class extends Controller {
     if (!roomWindow) {
       document.querySelector('main').appendChild(data)
     } else {
-      roomWindow.replaceChildren(data)
+      roomWindow.replaceWith(data)
     }
   }
 
